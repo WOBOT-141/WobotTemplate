@@ -23,7 +23,6 @@ import frc.robot.Util.ShooterCalculations;
 import frc.robot.commands.DriveCommands.StickCommand;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IGyro;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision.Detections.IDetection;
 import frc.robot.subsystems.Vision.VisionServer;
 import frc.robot.subsystems.Vision.AprilTags.AprilTagFilter;
@@ -36,7 +35,6 @@ public class AimAtSpecificTag extends Command {
 
   private int m_tagId;
   private final VisionServer m_visionServer;
-  private final Shooter m_shooter;
   private final IGyro m_gyro;
   private final AprilTagFilter m_aprilTagFilter;
   private final PIDController m_pidController;
@@ -52,7 +50,6 @@ public class AimAtSpecificTag extends Command {
     int redTagId,
     int blueTagId,
       VisionServer visionServer,
-      Shooter shooter,
       IGyro gyro,
       AprilTagFilter aprilTagFilter,
       CommandXboxController controller,
@@ -64,7 +61,6 @@ public class AimAtSpecificTag extends Command {
     if (allianceSelection.isEmpty() || allianceSelection.get() == Alliance.Blue)
       m_tagId = blueTagId;
 
-    m_shooter = shooter;
     m_gyro = gyro;
     m_visionServer = visionServer;
     m_aprilTagFilter = aprilTagFilter;
@@ -74,7 +70,6 @@ public class AimAtSpecificTag extends Command {
     m_pidController.setTolerance(2.0);
     m_drivetrain = drivetrain;
 
-    addRequirements(shooter);
   }
 
 
@@ -132,7 +127,6 @@ public class AimAtSpecificTag extends Command {
     System.out.println("AimAtHub END");
     m_drivetrain.driveWithoutGyro(0, 0, 0);
     m_controller.setRumble(RumbleType.kBothRumble, 0);
-    m_shooter.cancel();
   }
 
 

@@ -5,28 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.MagazineAndFeed;
-import frc.robot.subsystems.Shooter;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class StopRobot extends Command {
-  private Intake m_intake;
-  private MagazineAndFeed m_magazine;
-  private Climber m_climbe;
   private Drivetrain m_drive;
-  private Shooter m_shooter;
   /** Creates a new StopRobot. */
-  public StopRobot(Intake intake, MagazineAndFeed magazine, Drivetrain drive, Shooter shooter) {
-     m_intake = intake;
-     m_magazine = magazine;
+  public StopRobot(Drivetrain drive) {
     //  m_climbe = climbe;
      m_drive = drive;
-     m_shooter = shooter;
 
-     addRequirements(intake, magazine, drive, shooter);
+     addRequirements(drive);
   }
 
   // Called when the command is initially scheduled.
@@ -36,10 +25,6 @@ public class StopRobot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.cancel();
-    m_magazine.cancel();
-    m_intake.stopArm(); 
-    m_intake.intakeRollerStop(); 
     // m_climbe.stopClimber(); 
     m_drive.stopMotors();  
     
